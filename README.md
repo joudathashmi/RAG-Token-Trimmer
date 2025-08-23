@@ -1,4 +1,4 @@
-# 🇸🇦 Saudi Government Opportunity Evaluator
+# 🇸🇦 Test Opportunity Evaluator
 
 A Retrieval-Augmented Generation (RAG) system that evaluates government opportunities and projects against Saudi Arabia's PDPL (Personal Data Protection Law) and Vision 2030 policies.
 
