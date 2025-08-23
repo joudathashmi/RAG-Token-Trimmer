@@ -123,7 +123,7 @@ This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- Built for Saudi government compliance evaluation
+- Built for compliance evaluation
 - Uses OpenAI's GPT models for intelligent analysis
 - FAISS for efficient vector search
 - Flask for web interface
