@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Saudi Government Evaluator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .input-section {
+            margin-bottom: 30px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .results {
+            margin-top: 30px;
+        }
+        .result-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+        }
+        .prompt-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .output-box {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #17a2b8;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇸🇦 Saudi Government Opportunity Evaluator</h1>
+        
+        <div class="input-section">
+            <h3>Enter your inquiry:</h3>
+            <textarea id="inquiry" placeholder="Describe the government opportunity or project you want to evaluate...">New AI-enabled medical device factory in Riyadh with 35% local workforce and plans to export data abroad.</textarea>
+            <button onclick="evaluateInquiry()">Evaluate</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <p>🔍 Analyzing your inquiry...</p>
+        </div>
+
+        <div class="results" id="results" style="display: none;">
+            <h3>📊 Evaluation Results</h3>
+            <div id="result-content"></div>
+            
+            <h3>📝 System Prompt</h3>
+            <div id="prompt-content"></div>
+            
+            <h3>🤖 AI Response</h3>
+            <div id="output-content"></div>
+        </div>
+    </div>
+
+    <script>
+        async function evaluateInquiry() {
+            const inquiry = document.getElementById('inquiry').value;
+            if (!inquiry.trim()) {
+                alert('Please enter an inquiry to evaluate.');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                const response = await fetch('/evaluate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ inquiry: inquiry })
+                });
+
+                const data = await response.json();
+                
+                // Display results
+                document.getElementById('result-content').innerHTML = `
+                    <div class="result-box">
+                        <h4>Status: ${data.result.ok ? '✅ Approved' : '❌ Rejected'}</h4>
+                        <p><strong>Reason:</strong> ${data.result.reason}</p>
+                        <p><strong>Criteria Met:</strong> ${data.result.criteria.join(', ') || 'None'}</p>
+                        <p><strong>Gaps Identified:</strong> ${data.result.gaps.join(', ') || 'None'}</p>
+                        <pre>${JSON.stringify(data.result, null, 2)}</pre>
+                    </div>
+                `;
+
+                // Display prompt
+                if (data.prompts) {
+                    document.getElementById('prompt-content').innerHTML = `
+                        <div class="prompt-box">
+                            <p><strong>System Prompt:</strong></p>
+                            <pre>${data.prompts.system}</pre>
+                            <p><strong>User Prompt:</strong></p>
+                            <pre>${data.prompts.user}</pre>
+                            <p><strong>Timestamp:</strong> ${data.prompts.timestamp}</p>
+                        </div>
+                    `;
+                }
+
+                // Display output
+                if (data.outputs) {
+                    document.getElementById('output-content').innerHTML = `
+                        <div class="output-box">
+                            <p><strong>Mode:</strong> ${data.outputs.mode}</p>
+                            <p><strong>Response:</strong></p>
+                            <pre>${data.outputs.response}</pre>
+                            <p><strong>Timestamp:</strong> ${data.outputs.timestamp}</p>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('results').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error evaluating inquiry. Please try again.');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Auto-evaluate on page load
+        window.onload = function() {
+            evaluateInquiry();
+        };
+    </script>
+</body>
+</html>
+    
