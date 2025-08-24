@@ -2,7 +2,7 @@
 
 A Retrieval-Augmented Generation (RAG) system that evaluates government opportunities and projects against Saudi Arabia's PDPL (Personal Data Protection Law) and Vision 2030 policies.
 
-## 🚀 Features
+##  Features
 
 - **RAG System**: Uses vector search to retrieve relevant policy sections
 - **Policy Evaluation**: Evaluates projects against PDPL and Vision 2030 requirements
@@ -10,12 +10,12 @@ A Retrieval-Augmented Generation (RAG) system that evaluates government opportun
 - **Demo Mode**: Works without API keys for testing
 - **Real-time Analysis**: Provides detailed evaluation results with reasoning
 
-## 📋 Requirements
+##  Requirements
 
 - Python 3.8+
 - OpenAI API key (optional - demo mode available)
 
-## 🛠️ Installation
+##  Installation
 
 1. **Clone the repository:**
    ```bash
@@ -39,7 +39,7 @@ A Retrieval-Augmented Generation (RAG) system that evaluates government opportun
    echo "OPENAI_API_KEY=your-api-key-here" > .env
    ```
 
-## 🎯 Usage
+##  Usage
 
 ### Command Line Interface
 ```bash
@@ -63,7 +63,7 @@ python3 main.py --web
 
 3. Enter your inquiry and click "Evaluate"
 
-## 📊 Sample Output
+##  Sample Output
 
 The system evaluates inquiries and returns:
 - **Status**: Approved/Rejected
@@ -72,7 +72,7 @@ The system evaluates inquiries and returns:
 - **Gaps Identified**: Areas needing improvement
 - **Context References**: Which policy sections were used
 
-## 🔧 Configuration
+##  Configuration
 
 ### Environment Variables
 - `OPENAI_API_KEY`: Your OpenAI API key (optional)
@@ -81,7 +81,7 @@ The system evaluates inquiries and returns:
 - Default model: `gpt-4o-mini`
 - Can be changed via command line arguments
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 saudi-government-evaluator/
@@ -94,14 +94,14 @@ saudi-government-evaluator/
     └── index.html      # Main web page
 ```
 
-## 🧪 Demo Mode
+##  Demo Mode
 
 The system includes a demo mode that works without an API key:
 - Uses mock responses based on inquiry content
 - Perfect for testing and demonstration
 - Shows the same evaluation structure as real API calls
 
-## 🔍 How It Works
+##  How It Works
 
 1. **Document Processing**: Loads PDPL and Vision 2030 policy texts
 2. **Chunking**: Splits documents into manageable chunks
@@ -110,18 +110,15 @@ The system includes a demo mode that works without an API key:
 5. **Evaluation**: LLM evaluates inquiry against retrieved context
 6. **Output**: Returns structured evaluation results
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
 4. Submit a pull request
 
-## 📄 License
 
-This project is licensed under the MIT License.
-
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Built for compliance evaluation
 - Uses OpenAI's GPT models for intelligent analysis
@@ -130,4 +127,4 @@ This project is licensed under the MIT License.
 
 ---
 
-**Note**: This tool is designed to assist with government opportunity evaluation but should not be considered as legal advice. Always consult with qualified professionals for official compliance assessments.
+**Note**: This tool is designed to assist with  opportunity evaluation but should not be considered as legal advice. Always consult with qualified professionals for official compliance assessments.
